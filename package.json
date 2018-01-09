@@ -1,0 +1,47 @@
+{
+  "name": "run-npms",
+  "version": "1.0.0",
+  "description": "Run npm script via terminal",
+  "main": "index.js",
+  "bin": {
+    "run-npms": "index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "./node_modules/.bin/eslint **/*.js",
+    "precommit": "npm run lint",
+    "clean": "rimraf node_modules && npm i",
+    "global:install": "npm uninstall -g run-npms && npm i -g ."
+  },
+  "keywords": [
+    "run-npms",
+    "scripts",
+    "run",
+    "npm scripts"
+  ],
+  "files": [
+    "cli.js",
+    "index.js"
+  ],
+  "repository": "rjoydip/run-npms",
+  "author": {
+    "name": "Joydip Roy",
+    "email": "joydipand@gmail.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "execa": "^0.10.0",
+    "inquirer": "^6.0.0",
+    "pkg-script": "^1.0.1"
+  },
+  "devDependencies": {
+    "husky": "^1.0.0-rc.10",
+    "rimraf": "^2.6.2"
+  },
+  "readme": "ERROR: No README data found!",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run precommit"
+    }
+  }
+}
