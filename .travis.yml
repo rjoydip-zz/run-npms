@@ -9,7 +9,7 @@ before_install:
   - npm --version
   
 script:
-  - npm run test
+  - npm run lint
 
 git:
   depth: 5

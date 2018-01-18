@@ -1,4 +1,4 @@
-# run-npms [![Build Status](https://travis-ci.org/rjoydip/run-npms.svg?branch=master)](https://travis-ci.org/rjoydip/run-npmsy)
+# run-npms [![Build Status](https://travis-ci.org/rjoydip/run-npms.svg?branch=master)](https://travis-ci.org/rjoydip/run-npms)
 
 > Run npm script via terminal
 
