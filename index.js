@@ -18,44 +18,50 @@ module.exports = (async () => {
 				type: 'list',
 				message: 'Run npm scripts via terminal',
 				name: 'value',
-				choices: Object.keys(pkgScriptList).map(key => key)
+				choices: Object.keys(pkgScriptList).length ? Object.keys(pkgScriptList).map(key => key) : ['Quit']
 			}
 		])
-		.then(answers => (async () => {
-			const spinner = await ora({
-				text: chalk.green(`${answers['value']} running \n`),
-				spinner: {
-					'interval': 80,
-					'frames': [
-						'⣾',
-						'⣽',
-						'⣻',
-						'⢿',
-						'⡿',
-						'⣟',
-						'⣯',
-						'⣷'
-					]
-				}
-			})
-      
-			const child = await spawn(/^win/.test(global.process.platform) ? 'npm.cmd' : 'npm', ['run', answers['value']])
+		.then(answers => (
+			async () => {
+				const spinner = await ora({
+					text: chalk.green(`${answers['value']} running \n`),
+					spinner: {
+						'interval': 80,
+						'frames': [
+							'⣾',
+							'⣽',
+							'⣻',
+							'⢿',
+							'⡿',
+							'⣟',
+							'⣯',
+							'⣷'
+						]
+					}
+				})
 
-			child.stdout.on('data', (data) => {
-				spinner.start()
-				logger.log(`${data}`)
-			})
-      
-			child.stderr.on('data', (data) => {
-				spinner.stop()
-				logger.log(`${data}`)
-			})
-      
-			child.on('close', () => {
-				spinner.stop()
-				logger.log(`${chalk.cyan('Re-run using run-npms')}`)
-				global.process.exit(1)
-			})
-		})()
+				if (answers['value'] === 'Quit') {
+					logger.log(`${chalk.cyan('Re-run using run-npms')}`)
+					global.process.exit(1)
+				} else {
+					const child = await spawn(/^win/.test(global.process.platform) ? 'npm.cmd' : 'npm', ['run', answers['value']])
+
+					child.stdout.on('data', (data) => {
+						spinner.start()
+						logger.log(`${data}`)
+					})
+
+					child.stderr.on('data', (data) => {
+						spinner.stop()
+						logger.log(`${data}`)
+					})
+
+					child.on('close', () => {
+						spinner.stop()
+						logger.log(`${chalk.cyan('Re-run using run-npms')}`)
+						global.process.exit(1)
+					})
+				}
+			})()
 		)
 })()
